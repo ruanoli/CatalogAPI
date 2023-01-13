@@ -1,4 +1,5 @@
 using APICatalogo.Context;
+using APICatalogo.Repository;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -9,6 +10,8 @@ string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConne
 builder.Services.AddDbContext<AppDbContext> (options => 
     options.UseMySql(mySqlConnection, 
     ServerVersion.AutoDetect(mySqlConnection)));
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 //Ignorando Serialização para evitar erro ao dar Include() de categorias em produtos.
 builder.Services.AddControllers().AddJsonOptions(options
